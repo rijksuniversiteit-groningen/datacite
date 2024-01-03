@@ -1,1 +1,3 @@
 ipywidgets-jsonschema
+python-dotenv
+datacite
