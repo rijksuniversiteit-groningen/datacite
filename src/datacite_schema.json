@@ -1,0 +1,283 @@
+{
+    "title": "DataCite v4.3",
+    "description": "JSON representation of the DataCite v4.3 schema.",
+    "type": "object",
+
+    "properties": {
+        "types": {
+            "title": "Types",
+            "type": "object",
+            "properties": {
+                "resourceType": {"title": "Resource type",
+                                 "type": "string",
+                                 "default":"Dataset"
+                                },
+                "resourceTypeGeneral": { 
+                    "title": "Resource type general",
+                    "type": "string",
+                    "enum": [
+                        "Audiovisual",
+                        "Collection",
+                        "DataPaper",
+                        "Dataset",
+                        "Event",
+                        "Image",
+                        "InteractiveResource",
+                        "Model",
+                        "PhysicalObject",
+                        "Service",
+                        "Software",
+                        "Sound",
+                        "Text",
+                        "Workflow",
+                        "Other"
+                    ],
+                    "default": "Dataset"
+                }
+            },
+            "required": ["resourceType", "resourceTypeGeneral"]
+        },
+        "identifiers": {
+            "title": "Identifiers",
+            "type": "array",
+            "items":{
+                "type": "object",
+                "properties": {
+                    "identifier": {"type": "string",
+                                  "default": "10.21946"},
+                    "identifierType": {"type": "string",
+                                      "default":"DOI"}
+                },
+                "required": ["identifier", "identifierType"]
+            },
+            "minItems": 1,
+            "uniqueItems": true
+        },
+        "creators": {
+            "title": "Creators",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "title": "Name",
+                        "type": "string"},
+                    "nameType": {
+                                    "title": "Name type",
+                                    "type": "string",
+                                    "enum": [
+                                    "Organizational",
+                                    "Personal"]
+                                },
+                    "givenName": {
+                        "title": "Given name",
+                        "type": "string"},
+                    "familyName": {"title": "Family name",
+                                   "type": "string"},
+                    "nameIdentifiers": {
+                        "title": "Name indentifiers",
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "nameIdentifier": {"title": "Name identifier",
+                                                   "type": "string"},
+                                "nameIdentifierScheme": {"title": "Name indentifier scheme",
+                                                         "type": "string"},
+                                "schemeUri": {"title": "Scheme uri","type": "string", "format": "uri"}
+                            },
+                            "required": ["nameIdentifier", "nameIdentifierScheme"]
+                        },
+                        "uniqueItems": true
+                    },
+                    "affiliation": {
+                        "title": "Affiliation",
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {"title": "Name","type": "string"},
+                                "affiliationIdentifier": {"title": "Affilition identifier","type": "string"},
+                                "affiliationIdentifierScheme": {"title": "Affiliation identifier scheme","type": "string"},
+                                "schemeUri": {"title": "Scheme uri", "type": "string", "format": "uri"}
+                            },
+                        "required": ["name"]
+                        },
+                        "uniqueItems": true
+                    },
+                    "lang": {"title": "Lang","type": "string"}
+                },
+                "required": ["name"]
+            },
+            "minItems": 1,
+            "uniqueItems": true
+        },
+        "titles": {
+            "title": "Titles",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "title": {"title": "Title","type": "string"},
+                    "titleType": {
+                        "title": "Title type",
+                        "type": "string",
+                        "enum": [
+                            "AlternativeTitle",
+                            "Subtitle",
+                            "TranslatedTitle",
+                            "Other"
+                        ]
+                    },
+                    "lang": {"title": "Lang",
+                             "type": "string"}
+                },
+                "required": ["title"]
+            },
+            "minItems": 1,
+            "uniqueItems": true
+        },
+        "publisher": {
+            "title": "Publisher",
+            "type": "string"
+            
+        },
+        "publicationYear": {
+            "title": "Publication year",
+            "type": "string",
+            "format": "year"
+        },
+        "schemaVersion": {
+            "title": "Schema version",
+            "type": "string",
+            "const": "http://datacite.org/schema/kernel-4"
+        },
+        "subjects": {
+            "title": "Subjects",
+            "type": "array",
+            "items": {
+                "title": "Subject",
+                "type": "object",
+                "properties": {
+                    "subject": {"type": "string"},
+                    "subjectScheme": {"type": "string"},
+                    "schemeUri": {"type": "string", "format": "uri"},
+                    "valueUri": {"type": "string", "format": "uri"},
+                    "lang": {"type": "string"}
+                },
+                "required": ["subject"]
+            },
+            "uniqueItems": true
+        },
+        "contributors": {
+            "title": "Contributors",
+            "type": "array",
+            "items": {
+                "title": "Contributor",
+                "type": "object",
+                "properties": {
+                    "contributorType": {
+                                        "title": "Contributor type",
+                                        "type": "string",
+                                        "enum": [
+                                            "ContactPerson",
+                                            "DataCollector",
+                                            "DataCurator",
+                                            "DataManager",
+                                            "Distributor",
+                                            "Editor",
+                                            "HostingInstitution",
+                                            "Producer",
+                                            "ProjectLeader",
+                                            "ProjectManager",
+                                            "ProjectMember",
+                                            "RegistrationAgency",
+                                            "RegistrationAuthority",
+                                            "RelatedPerson",
+                                            "Researcher",
+                                            "ResearchGroup",
+                                            "RightsHolder",
+                                            "Sponsor",
+                                            "Supervisor",
+                                            "WorkPackageLeader",
+                                            "Other"
+                                        ]},
+                    "name": {
+                        "title": "Name",
+                        "type": "string"
+                    },
+                    "nameType": {
+                        "title": "Name type",
+                        "type": "string",
+                                    "enum": [
+                                        "Organizational",
+                                        "Personal"
+                                    ]},
+                    "givenName": {
+                        "title": "Given name",
+                        "type": "string"},
+                    "familyName": {
+                        "title": "Family name",
+                        "type": "string"},
+                    "nameIdentifiers": {
+                        "title": "Name identifiers",                    
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "nameIdentifier": {
+                                    "title": "Name identifier",
+                                    "type": "string"},
+                                "nameIdentifierScheme": {
+                                    "title": "Name identifier scheme",
+                                    "type": "string"},
+                                "schemeUri": {
+                                    "title": "Scheme uri",
+                                    "type": "string", "format": "uri"}    
+                            },                    
+                            "required": ["nameIdentifier", "nameIdentifierScheme"]
+                        },
+                        "uniqueItems": true    
+                    },                    
+                    "affiliation": {
+                        "title": "Affiliation",
+                        "type": "array",          
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "title": "Name",
+                                    "type": "string"},
+                                "affiliationIdentifier": {
+                                    "title": "Affiliation identifier",
+                                    "type": "string"},
+                                "affiliationIdentifierScheme": {
+                                    "title": "Affiliation identifier scheme",
+                                    "type": "string"},
+                                "schemeUri": {
+                                    "title": "Scheme uri",
+                                    "type": "string", "format": "uri"}  
+                            },
+                            "required": ["name"]  
+                        },
+                        "uniqueItems": true                        
+                    },
+                    
+                    "lang": {"type": "string"}
+                },
+                "required": ["contributorType", "name"]
+            },
+            "uniqueItems": true
+        }
+    },
+    
+    "required": [
+        "identifiers",
+        "creators",
+        "titles",
+        "publisher",
+        "publicationYear",
+        "types",
+        "schemaVersion"
+    ]
+}
