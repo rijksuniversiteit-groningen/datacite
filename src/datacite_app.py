@@ -51,6 +51,27 @@ class datacite_gui(object):
         self.output_form = widgets.Output()
         self.output_results = widgets.Output()
         
+        self.datacite_user = widgets.Text(   
+            value=None,  
+            placeholder='Datacite user',
+            description='Username:',
+            disabled=False   
+        )
+        
+        self.datacite_prefix = widgets.Text(   
+            value=None,  
+            placeholder='DOI prefix',
+            description='Prefix:',
+            disabled=False   
+        )
+        
+        self.datacite_pass = widgets.Password(
+            value=None,
+            placeholder='Enter password',
+            description='Password:',
+            disabled=False
+        )
+        
         self.button_draft_doi = widgets.Button(
             description='Draft DOI',
             disabled=False,
@@ -88,10 +109,11 @@ class datacite_gui(object):
             self.output_form.clear_output()
             self.jsform.show(width="600px")
         
-        self.header = widgets.HTML("<h1>DOI</h1>", layout=widgets.Layout(height='auto'))
+        self.header = widgets.HTML("<h1>Datacite DOI prototype</h1>", layout=widgets.Layout(height='auto'))
         self.header.style.text_align='center'
 
-        self.lsidebar = widgets.VBox(children = [self.button_draft_doi,self.button_doi_metadata,
+        self.lsidebar = widgets.VBox(children = [self.datacite_user, self.datacite_pass, self.datacite_prefix,
+                                                 self.button_draft_doi, self.button_doi_metadata,
                                                 self.button_metadata_post])
 
     def on_click_button_metadata_post(self, b):

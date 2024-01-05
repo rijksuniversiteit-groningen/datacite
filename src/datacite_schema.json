@@ -624,6 +624,43 @@
                 }
             },
             "uniqueItems": true
+        },
+        "fundingReferences": {
+            "title": "Funding references",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "funderName": {
+                        "title": "Funder name",
+                        "type": "string"},
+                    "funderIdentifier": {
+                        "title": "Funder indentifier",
+                        "type": "string"},
+                    "funderIdentifierType": {
+                        "title": "Funder identifier type",
+                        "type": "string",
+                        "enum": [
+                            "ISNI",
+                            "GRID",
+                            "Crossref Funder ID",
+                            "ROR",
+                            "Other"
+                        ]
+                    },
+                    "awardNumber": {
+                        "title": "Award number",
+                        "type": "string"},
+                    "awardUri": {
+                        "title": "Award uri",
+                        "type": "string", "format": "uri"},
+                    "awardTitle": {
+                        "title": "Award title",
+                        "type": "string"}
+                },
+                "required": ["funderName"]
+            },
+            "uniqueItems": true
         }
     },
     
