@@ -321,6 +321,309 @@
                 "required": ["date", "dateType"]
             },
             "uniqueItems": true
+        },
+        "language": {
+            "title": "Language",
+            "type": "string",
+            "$comment": "Primary language of the resource. Allowed values are taken from  IETF BCP 47, ISO 639-1 language codes."
+        },
+        "alternateIdentifiers": {
+            "title": "Alternate identifiers",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "alternateIdentifier": {
+                        "title": "Alternate identifier",
+                        "type": "string"},
+                    "alternateIdentifierType": {
+                        "title": " Alternate identifier type",
+                        "type": "string"}
+                },
+                "required": ["alternateIdentifier", "alternateIdentifierType"]
+            },
+            "uniqueItems": true
+        },
+        "relatedIdentifiers": {
+            "title": "Related identifiers",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "relatedIdentifier": {
+                        "title": "Related identifier",
+                        "type": "string"},
+                    "relatedIdentifierType": {
+                        "title": "Related identifier type",
+                        "type": "string",
+                        "enum": [
+                            "ARK",
+                            "arXiv",
+                            "bibcode",
+                            "DOI",
+                            "EAN13",
+                            "EISSN",
+                            "Handle",
+                            "IGSN",
+                            "ISBN",
+                            "ISSN",
+                            "ISTC",
+                            "LISSN",
+                            "LSID",
+                            "PMID",
+                            "PURL",
+                            "UPC",
+                            "URL",
+                            "URN",
+                            "w3id"     
+                        ]},
+                    "relationType": {
+                        "title": "Relation type",
+                        "type": "string",
+                                     "enum": [
+                                         "IsCitedBy",
+                                         "Cites",
+                                         "IsSupplementTo",
+                                         "IsSupplementedBy",
+                                         "IsContinuedBy",
+                                         "Continues",
+                                         "IsDescribedBy",
+                                         "Describes",
+                                         "HasMetadata",
+                                         "IsMetadataFor",
+                                         "HasVersion",
+                                         "IsVersionOf",
+                                         "IsNewVersionOf",
+                                         "IsPreviousVersionOf",
+                                         "IsPartOf",
+                                         "HasPart",
+                                         "IsReferencedBy",
+                                         "References",
+                                         "IsDocumentedBy",
+                                         "Documents",
+                                         "IsCompiledBy",
+                                         "Compiles",
+                                         "IsVariantFormOf",
+                                         "IsOriginalFormOf",
+                                         "IsIdenticalTo",
+                                         "IsReviewedBy",
+                                         "Reviews",
+                                         "IsDerivedFrom",
+                                         "IsSourceOf",
+                                         "IsRequiredBy",
+                                         "Requires",
+                                         "IsObsoletedBy",
+                                         "Obsoletes"
+                                     ]},
+                    "relatedMetadataScheme": {
+                        "title": "Related metadata schema",
+                        "type": "string"},
+                    "schemeUri": {
+                        "title": "Scheme uri",
+                        "type": "string", "format": "uri"},
+                    "schemeType": {
+                        "title": "Scheme type",
+                        "type": "string"},
+                    "resourceTypeGeneral": {
+                        "title": "Resouce type general",
+                        "type": "string",
+                        "enum": [
+                            "Audiovisual",
+                            "Collection",
+                            "DataPaper",
+                            "Dataset",
+                            "Event",
+                            "Image",
+                            "InteractiveResource",
+                            "Model",
+                            "PhysicalObject",
+                            "Service",
+                            "Software",
+                            "Sound",
+                            "Text",
+                            "Workflow",
+                            "Other"
+                        ]}
+                },
+                "required": ["relatedIdentifier", "relatedIdentifierType", "relationType"],
+                "if": {
+                    "properties": {
+                        "relationType": {"enum": ["HasMetadata", "IsMetadataFor"]}
+                    }
+                },
+                "else": {
+                    "$comment": "these properties may only be used with relation types HasMetadata/IsMetadataFor",
+                    "properties": {
+                        "relatedMetadataScheme": false,
+                        "schemeUri": false,
+                        "schemeType": false
+                    }
+                }
+            },
+            "uniqueItems": true
+        },
+        "sizes": {
+            "title": "Sizes",
+            "type": "array",
+            "items": {
+                "title": "Size",
+                "type": "string"
+            },
+            "uniqueItems": true
+        },
+        "formats": {
+            "title": "Formats",
+            "type": "array",
+            "items": {
+                "title": "Format",
+                "type": "string"
+            },
+            "uniqueItems": true
+        },
+        "version": {
+            "title": "Version",
+            "type": "string"
+        },
+        "rightsList": {
+            "title": "Rights list",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "rights": {
+                        "title": "Rights",
+                        "type": "string"},
+                    "rightsUri": {
+                        "title": "Rights uri",
+                        "type": "string", "format": "uri"},
+                    "rightsIdentifier": {
+                        "title":"Rights identifier",
+                        "type": "string"},
+                    "rightsIdentifierScheme": {
+                        "title": "Rights identifier scheme",
+                        "type": "string"},
+                    "schemeUri": {
+                        "title": "Scheme uri",
+                        "type": "string", "format": "uri"},
+                    "lang": {
+                        "title": "Language",
+                        "type": "string"}
+                }
+            },
+            "uniqueItems": true
+        },
+        "descriptions": {
+            "title": "Descriptions",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "description": {
+                        "title": "Description",
+                        "type": "string"},
+                    "descriptionType": {
+                    "type": "string",
+                        "enum": [
+                            "Abstract",
+                            "Methods",
+                            "SeriesInformation",
+                            "TableOfContents",
+                            "TechnicalInfo",
+                            "Other"
+                        ]
+                    },
+                    "lang": {
+                        "title": "Language",
+                        "type": "string"}
+                },
+                "required": ["description", "descriptionType"]
+            },
+            "uniqueItems": true
+        },
+        "geoLocations": {
+            "title": "Geo locations",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "geoLocationPlace": {
+                        "title": "Geo-location place",
+                        "type": "string"},
+                    "geoLocationPoint": {
+                        "title": "Geo-location point",
+                        "type": "object",
+                        "properties": {
+                            "pointLongitude": {
+                                "title": "Point longitude",
+                                "type": "string", "format": "longitude"},
+                            "pointLatitude": {
+                                "title": "Point latitude",
+                                "type": "string", "format": "latitude"}
+                        },
+                        "required": ["pointLongitude", "pointLatitude"]
+                    },
+                    "geoLocationBox": {
+                        "title": "Geo-location box",
+                        "type": "object",
+                        "properties": {
+                            "westBoundLongitude": {
+                                "title": "West bound longitude",
+                                "type": "string", "format": "longitude"},
+                            "eastBoundLongitude": {
+                                "title":"East bound longitude",
+                                "type": "string", "format": "longitude"},
+                            "southBoundLatitude": {
+                                "title":"South bound latitude",
+                                "type": "string", "format": "latitude"},
+                            "northBoundLatitude": {
+                                "title":"North bound latitude",
+                                "type": "string", "format": "latitude"}
+                        },
+                        "required": ["westBoundLongitude", "eastBoundLongitude", "southBoundLatitude", "northBoundLatitude"]
+                    },
+                    "geoLocationPolygons": {
+                        "title": "Geo-location polygons",
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "polygonPoints": {
+                                    "title": "Polygon points",
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "pointLongitude": {
+                                                "title": "Point longitude",
+                                                "type": "string", "format": "longitude"},
+                                            "pointLatitude": {
+                                                "title": "Point latitude",
+                                                "type": "string", "format": "latitude"}
+                                        },
+                                        "required": ["pointLongitude", "pointLatitude"]
+                                    },
+                                    "minItems": 4
+                                },
+                                "inPolygonPoint": {
+                                    "title": "In polygon Point",
+                                    "type": "object",
+                                    "properties": {
+                                        "pointLongitude": {
+                                            "title": "Point longitude",
+                                            "type": "string", "format": "longitude"},
+                                        "pointLatitude": {
+                                            "title": "Point latitude",
+                                            "type": "string", "format": "latitude"}
+                                    },
+                                    "required": ["pointLongitude", "pointLatitude"]}
+                            },
+                            "required": ["polygonPoints"]
+                        },
+                        "uniqueItems": true
+                    }
+                }
+            },
+            "uniqueItems": true
         }
     },
     
