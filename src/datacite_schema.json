@@ -139,8 +139,7 @@
         },
         "publisher": {
             "title": "Publisher",
-            "type": "string"
-            
+            "type": "string"            
         },
         "publicationYear": {
             "title": "Publication year",

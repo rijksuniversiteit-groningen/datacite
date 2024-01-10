@@ -1,6 +1,7 @@
 import os
 import ipywidgets as widgets
 from ipywidgets_jsonschema import Form
+from jsonschema.exceptions import ValidationError
 from IPython.display import display, SVG
 from IPython.display import IFrame
 from IPython import display as dsp
@@ -122,8 +123,17 @@ class datacite_gui(object):
 
         # self.jsform.data.identifiers[0]["identifier"] = self.draftdoi
         
-        data = self.jsform.data
-
+        self.output_results.clear_output()
+        
+        self.tab.selected_index = 1
+        
+        try:
+            data = self.jsform.data
+        except ValidationError as e:
+            with self.output_results:
+                print(e)
+            return
+            
         # Validate dictionary
         assert schema43.validate(data)
 
@@ -136,10 +146,6 @@ class datacite_gui(object):
         self.draftdoi = self.dataciteconn.draft_doi(metadata = data)
 
         metadatadoi = self.dataciteconn.metadata_get(self.draftdoi)
-        
-        self.output_results.clear_output()
-        
-        self.tab.selected_index = 1
         
         with self.output_results:
             print(json.dumps(metadatadoi,indent = 4))
