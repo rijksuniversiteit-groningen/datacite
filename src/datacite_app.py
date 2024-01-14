@@ -6,6 +6,7 @@ from IPython.display import display, SVG
 from IPython.display import IFrame
 from IPython import display as dsp
 from datacite import DataCiteRESTClient, DataCiteMDSClient, schema43
+from datacite.errors import DataCiteServerError
 import json
 
 from dotenv import load_dotenv
@@ -52,25 +53,33 @@ class datacite_gui(object):
         self.output_form = widgets.Output()
         self.output_results = widgets.Output()
         
-        self.datacite_user = widgets.Text(   
+        self.datacite_user_w = widgets.Text(   
             value=None,  
             placeholder='Datacite user',
             description='Username:',
             disabled=False   
         )
         
-        self.datacite_prefix = widgets.Text(   
+        self.datacite_prefix_w = widgets.Text(   
             value=None,  
             placeholder='DOI prefix',
             description='Prefix:',
             disabled=False   
         )
         
-        self.datacite_pass = widgets.Password(
+        self.datacite_pass_w = widgets.Password(
             value=None,
             placeholder='Enter password',
             description='Password:',
             disabled=False
+        )
+        
+        self.button_creds = widgets.Button(
+            description='Set credentials',
+            disabled=False,
+            button_style='', # 'success', 'primary' 'info', 'warning', 'danger' or ''
+            tooltip='Authenticates to datacite',
+            icon='' # (FontAwesome names without the `fa-` prefix)
         )
         
         self.button_draft_doi = widgets.Button(
@@ -113,9 +122,29 @@ class datacite_gui(object):
         self.header = widgets.HTML("<h1>Datacite DOI prototype</h1>", layout=widgets.Layout(height='auto'))
         self.header.style.text_align='center'
 
-        self.lsidebar = widgets.VBox(children = [self.datacite_user, self.datacite_pass, self.datacite_prefix,
+        self.lsidebar = widgets.VBox(children = [self.datacite_user_w, self.datacite_pass_w, self.datacite_prefix_w, self.button_creds,
                                                  self.button_draft_doi, self.button_doi_metadata,
                                                 self.button_metadata_post])
+
+    def on_click_button_creds(self, b):
+        
+        self.output_results.clear_output()
+        self.tab.selected_index = 1
+        
+        if not self.datacite_user_w.value or not self.datacite_pass_w.value or not self.datacite_prefix_w.value:
+            with self.output_results:
+                print("Prefix or credentials are missing")
+            return
+
+        self.dataciteconn = DataCiteRESTClient(
+            username=self.datacite_user_w.value,
+            password=self.datacite_pass_w.value,
+            prefix=self.datacite_prefix_w.value,
+            test_mode=True
+        )
+            
+        with self.output_results:
+            print("Prefix and credentials updated")
 
     def on_click_button_metadata_post(self, b):
 
@@ -124,7 +153,6 @@ class datacite_gui(object):
         # self.jsform.data.identifiers[0]["identifier"] = self.draftdoi
         
         self.output_results.clear_output()
-        
         self.tab.selected_index = 1
         
         try:
@@ -163,8 +191,15 @@ class datacite_gui(object):
             print(json.dumps(metadatadoi,indent = 4))
 
     def on_click_button_draft_doi(self, b):
-        self.draftdoi = self.dataciteconn.draft_doi()
         
+        self.tab.selected_index = 1
+     
+        try:
+            self.draftdoi = self.dataciteconn.draft_doi()
+        except DataCiteServerError as e:
+            with self.output_results:
+                print("Connection error, credentials might not be correct. Please provide username, password and prefix.")
+            return
         # self.output_results.clear_output()
         
         self.tab.selected_index = 1
@@ -177,6 +212,7 @@ class datacite_gui(object):
         self.button_draft_doi.on_click(self.on_click_button_draft_doi)
         self.button_doi_metadata.on_click(self.on_click_button_doi_metadata)
         self.button_metadata_post.on_click(self.on_click_button_metadata_post)
+        self.button_creds.on_click(self.on_click_button_creds)
         pass
     
     def run_app(self):
