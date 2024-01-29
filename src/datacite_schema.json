@@ -276,42 +276,26 @@
                 "type": "object",
                 "properties": {
                     "date": {
-                                "title": "Date (format to be validated)",
-                                "type": "object",
-                                "properties":{
-                                    "date":{"title": "Date","type":"string"},
-                                        "format": {
-                                    "title": "Format",
-                                    "type": "string",
-                                        "enum": [
-                                            "year",
-                                            "yearmonth",
-                                            "date",
-                                            "datetime",
-                                            "year-range",
-                                            "yearmonth-range",
-                                            "date-range",
-                                            "datetime-range"
-                                        ]
-                                        }
-                                }
+                        "title": "Date (format to be validated)",
+                        "type": "string",
+                        "format": "date"
                     },
-                    "dateType": {
-                                    "title": "Date type",
-                                    "type": "string",
-                                    "enum": [
-                                        "Accepted",
-                                        "Available",
-                                        "Copyrighted",
-                                        "Collected",
-                                        "Created",
-                                        "Issued",
-                                        "Submitted",
-                                        "Updated",
-                                        "Valid",
-                                        "Withdrawn",
-                                        "Other"
-                                    ]
+                    "dateType": {        
+                        "title": "Date type",
+                        "type": "string",
+                        "enum": [
+                            "Accepted"
+                            "Available",
+                            "Copyrighted",
+                            "Collected",
+                            "Created",
+                            "Issued",
+                            "Submitted",
+                            "Updated",
+                            "Valid",
+                            "Withdrawn",
+                            "Other"
+                        ]
                     },
                     "dateInformation": {
                         "title": "Date information",
